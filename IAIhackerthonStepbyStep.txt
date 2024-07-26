@@ -1,0 +1,52 @@
+Dockerfile và Docker image là hai khái niệm quan trọng trong Docker nhưng chúng có vai trò và chức năng khác nhau:
+
+Dockerfile
+Định nghĩa: Dockerfile là một tệp văn bản chứa một tập hợp các hướng dẫn để xây dựng một Docker image. Nó là một tập lệnh (script) mà Docker sử dụng để tự động hóa quá trình tạo ra một Docker image.
+
+Chức năng: Dockerfile chứa các lệnh để cài đặt phần mềm, sao chép tệp, thiết lập biến môi trường, và cấu hình các bước cần thiết khác để thiết lập một môi trường chứa.
+
+Cú pháp: Các lệnh trong Dockerfile bao gồm FROM, RUN, COPY, CMD, EXPOSE, ENV, ENTRYPOINT, v.v.
+
+Ví dụ về một Dockerfile đơn giản:
+
+Dockerfile
+Sao chép mã
+# Sử dụng một image cơ bản từ Docker Hub
+FROM ubuntu:latest
+
+# Cài đặt một số phần mềm cần thiết
+RUN apt-get update && apt-get install -y python3 python3-pip
+
+# Sao chép mã nguồn vào container
+COPY . /app
+
+# Đặt thư mục làm việc
+WORKDIR /app
+
+# Cài đặt các phụ thuộc từ requirements.txt
+RUN pip3 install -r requirements.txt
+
+# Chạy ứng dụng
+CMD ["python3", "app.py"]
+Docker Image
+Định nghĩa: Docker image là một bản mẫu bất biến (immutable template) để tạo ra Docker container. Nó được tạo ra từ Dockerfile thông qua lệnh docker build.
+
+Chức năng: Docker image chứa tất cả những gì cần thiết để chạy một ứng dụng - bao gồm mã nguồn, thư viện, biến môi trường và các tệp cấu hình.
+
+Thừa kế: Docker image có thể dựa trên một image khác (ví dụ FROM ubuntu:latest), và có thể được layer lên từ nhiều image khác nhau.
+
+Tạo Container: Khi bạn chạy một Docker image, nó sẽ tạo ra một Docker container - một instance chạy của image đó.
+
+Ví dụ: Nếu bạn có Dockerfile như trên và bạn chạy lệnh:
+
+bash
+Sao chép mã
+docker build -t my-python-app .
+Nó sẽ tạo ra một Docker image tên là my-python-app. Bạn có thể chạy image này bằng lệnh:
+
+bash
+Sao chép mã
+docker run my-python-app
+Tổng kết
+Dockerfile: Là file định nghĩa cách xây dựng Docker image.
+Docker Image: Là kết quả của việc build Dockerfile, là một bản mẫu để tạo container.
